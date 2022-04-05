@@ -11,13 +11,18 @@ public class MapGenerator : MonoBehaviour
     private MapChunk[] _allChunks;
     [SerializeField]
     private Transform _chunksSpawnPoint;
+    [SerializeField]
+    private float _despawnZ = -1;
 
     [ShowInInspector]
     private List<MapChunk> _activeChunks = new List<MapChunk>();
 
-
+    [ShowInInspector]
+    [ReadOnly]
     private Queue<MapChunk> _availableChunks;
-
+    
+    [ShowInInspector]
+    [ReadOnly]
     private int _currentWait = 0;
 
     private float NextChunkWait { get => 1 / _larry.Speed; }
@@ -41,7 +46,7 @@ public class MapGenerator : MonoBehaviour
         MapChunk chunkToRemove = null;
         foreach (var chunk in _activeChunks)
         {
-            if (chunk.transform.position.z <= -1)
+            if (chunk.transform.position.z <= _despawnZ)
             {
                 chunkToRemove = chunk;
             }
@@ -71,7 +76,7 @@ public class MapGenerator : MonoBehaviour
             if(_currentWait == 0)
             {
                 activeChunk.Init(true);
-                _currentWait = Random.Range(2, 5);
+                _currentWait = Random.Range(2, 4);
             }
             else
             {

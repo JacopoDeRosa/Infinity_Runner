@@ -27,6 +27,7 @@ public class MapChunk : MonoBehaviour
         }
 
         int passage = Random.Range(0, _cells.Length);
+
         int enumLenght = System.Enum.GetNames(typeof(ObTypes)).Length;
 
         for (int i = 0; i < _cells.Length; i++)
@@ -34,6 +35,7 @@ public class MapChunk : MonoBehaviour
             if(i == passage)
             {
                 _cells[passage].Init(ObTypes.Empty);
+                continue;
             }
 
             ObTypes obType = (ObTypes)Random.Range(0, enumLenght);
