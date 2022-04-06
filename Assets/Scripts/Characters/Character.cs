@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 using System;
 
 public class Character : MonoBehaviour
@@ -19,9 +20,15 @@ public class Character : MonoBehaviour
 
     public event FloatChangeHandler _onSpeedChange;
 
+    [Button]
     public void SetSpeed(float speed)
     {
         _speed = speed;
+        _onSpeedChange?.Invoke(_speed);
+    }
+
+    private void Start()
+    {
         _onSpeedChange?.Invoke(_speed);
     }
 }
