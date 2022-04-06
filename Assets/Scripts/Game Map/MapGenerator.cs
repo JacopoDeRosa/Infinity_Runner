@@ -13,6 +13,10 @@ public class MapGenerator : MonoBehaviour
     private Transform _chunksSpawnPoint;
     [SerializeField]
     private float _despawnZ = -1;
+    [SerializeField]
+    private AnimationCurve _yPositionCurve;
+    [SerializeField]
+    private float _chunkLenght;
 
     [ShowInInspector]
     private List<MapChunk> _activeChunks = new List<MapChunk>();
@@ -25,7 +29,7 @@ public class MapGenerator : MonoBehaviour
     [ReadOnly]
     private int _currentWait = 0;
 
-    private float NextChunkWait { get => 1 / _larry.Speed; }
+    private float NextChunkWait { get => _chunkLenght / _larry.Speed; }
 
     private void Awake()
     {
@@ -53,6 +57,7 @@ public class MapGenerator : MonoBehaviour
             else
             {
                 chunk.transform.Translate(new Vector3(0, 0, -(_larry.Speed * Time.deltaTime)));
+                chunk.transform.position = new Vector3(0, GetChunkY(chunk.transform), chunk.transform.position.z);
             }
 
         }
@@ -65,6 +70,11 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    private float GetChunkY(Transform chunk)
+    {
+        return _yPositionCurve.Evaluate(chunk.position.z);
+    }
+
     private IEnumerator MapGeneration()
     {
         while(true)
@@ -73,6 +83,7 @@ public class MapGenerator : MonoBehaviour
             var activeChunk = _availableChunks.Dequeue();
             activeChunk.gameObject.SetActive(true);
             activeChunk.transform.position = _chunksSpawnPoint.position;
+            activeChunk.transform.position = new Vector3(activeChunk.transform.position.x, GetChunkY(activeChunk.transform), activeChunk.transform.position.z);
             if(_currentWait == 0)
             {
                 activeChunk.Init(true);
