@@ -56,8 +56,13 @@ public class MapGenerator : MonoBehaviour
             }
             else
             {
-                chunk.transform.Translate(new Vector3(0, 0, -(_larry.Speed * Time.deltaTime)));
-                chunk.transform.position = new Vector3(0, GetChunkY(chunk.transform), chunk.transform.position.z);
+                float chunkY = GetChunkY(chunk.transform);
+                float chunkZ = chunk.transform.position.z - (_larry.Speed * Time.deltaTime);
+                chunk.transform.position = new Vector3(0, chunkY, chunkZ);
+
+                float nextChunkY = _yPositionCurve.Evaluate(chunk.transform.position.z - _chunkLenght);
+
+                chunk.transform.LookAt(new Vector3(0, nextChunkY, chunk.transform.position.z - _chunkLenght));
             }
 
         }
