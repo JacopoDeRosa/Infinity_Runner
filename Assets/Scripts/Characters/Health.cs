@@ -14,7 +14,7 @@ public class Health : MonoBehaviour
     public event Action onShotgunUsed;
 
     /// <summary>
-    /// Use change to add or remove hp (SIGNS MATTER BITCH DON'T FUCK UP)
+    /// Use change to add or remove hp (SIGNS MATTER)
     /// </summary>
     /// <param name="change"></param>
     public void ChangeHp(int change)

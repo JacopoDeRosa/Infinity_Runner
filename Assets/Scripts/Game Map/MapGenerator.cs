@@ -33,6 +33,8 @@ public class MapGenerator : MonoBehaviour
 
     private void Awake()
     {
+        // Populates the queue with all the chunks marked in the start array, this array is usless afterwards and can be ignored
+        // This queue is used to recycle the chunks in a FIFO pattern.
         _availableChunks = new Queue<MapChunk>();
         foreach(MapChunk chunk in _allChunks)
         {
@@ -42,11 +44,14 @@ public class MapGenerator : MonoBehaviour
 
     private void Start()
     {
+        // Starts the map generation routine (D'uh?!)
         StartCoroutine(MapGeneration());
     }
 
     void Update()
     {
+        // If a chunk passes the despawn position it will be set for recycling, collections shouldn't be modified in loops
+        // so it gets stored in a variable and recycled afterward.
         MapChunk chunkToRemove = null;
         foreach (var chunk in _activeChunks)
         {
@@ -56,6 +61,7 @@ public class MapGenerator : MonoBehaviour
             }
             else
             {
+                // Moves the chunk on Z based on Larry's speed and on Y based on the provided curve
                 float chunkY = GetChunkY(chunk.transform);
                 float chunkZ = chunk.transform.position.z - (_larry.Speed * Time.deltaTime);
                 chunk.transform.position = new Vector3(0, chunkY, chunkZ);
@@ -67,6 +73,7 @@ public class MapGenerator : MonoBehaviour
 
         }
 
+        // If a chunk was marked it gets recycled
         if(chunkToRemove != null)
         {
             _activeChunks.Remove(chunkToRemove);
@@ -77,6 +84,7 @@ public class MapGenerator : MonoBehaviour
 
     private float GetChunkY(Transform chunk)
     {
+        // Finds the Y position of the chunk based on his Z position by placing it on the serialized curve
         return _yPositionCurve.Evaluate(chunk.position.z);
     }
 
@@ -84,23 +92,28 @@ public class MapGenerator : MonoBehaviour
     {
         while(true)
         {
-            // Spawns a new Chunk
+            // Gets a new Chunk from the ones that have gone trough the treadmill in a FIFO pattern
             var activeChunk = _availableChunks.Dequeue();
+            // Sets the chunk active since it gets deactivated at cycle end
             activeChunk.gameObject.SetActive(true);
+            // Sets the chunk spawn position and snaps it on the "Tsubasa" curve.
             activeChunk.transform.position = _chunksSpawnPoint.position;
             activeChunk.transform.position = new Vector3(activeChunk.transform.position.x, GetChunkY(activeChunk.transform), activeChunk.transform.position.z);
+            // Checks if it's time to spawn a new obstacle, if so the chunk will be marked as an obstacle and a new wait time chosen
             if(_currentWait == 0)
             {
                 activeChunk.Init(true);
                 _currentWait = Random.Range(2, 4);
             }
+            // Otherwise the chunk will be set as empty and wait will decrease
             else
             {
                 activeChunk.Init(false);
                 _currentWait--;
             }
+            // Adds the chunk to the active chunks list allowing it to be moved in update.
             _activeChunks.Add(activeChunk);
-
+            // Waits for the amount of time it takes the spawned chunk to clear the area
             yield return new WaitForSeconds(NextChunkWait);
         }   
     }
