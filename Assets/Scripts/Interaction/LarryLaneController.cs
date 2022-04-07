@@ -3,11 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class LarryLaneController : MonoBehaviour
+public class LarryLaneController : MonoBehaviour, IController
 {
     [SerializeField] private float _sideSpeed;
 
     private float _xPosition;
+    private bool _controlLock;
+
+    public void Lock()
+    {
+        _controlLock = true;
+        transform.LookAt(transform.position + new Vector3(0, 0, 1));
+    }
+
+    public void UnLock()
+    {
+        _controlLock = false;
+    }
 
     private void Update()
     {
