@@ -1,4 +1,4 @@
-public enum EStance
+public enum Stance
 {
  Running = 0,
  Jumping,
