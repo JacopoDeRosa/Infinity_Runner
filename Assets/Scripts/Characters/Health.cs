@@ -31,7 +31,7 @@ public class Health : MonoBehaviour
             onDeath?.Invoke();
             _currentHp = 0;
         }
-        onHpChanged.Invoke(_currentHp);
+        onHpChanged.Invoke(change);
     }
 
 

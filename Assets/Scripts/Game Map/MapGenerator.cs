@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField]
-    private Character _larry;
+    private Larry _larry;
     [SerializeField] 
     private MapChunk[] _allChunks;
     [SerializeField]

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PickupsInitializer : MonoBehaviour
 {
-    [SerializeField] private Item[] _items;
+    [SerializeField] private InteractiveTile[] _items;
 
     public void Initialize()
     {
