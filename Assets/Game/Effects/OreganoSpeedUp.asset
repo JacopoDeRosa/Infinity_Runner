@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: OreganoSpeedUp
   m_EditorClassIdentifier: 
   _duration: 8
-  _speedChange: 1
+  _speedChange: 2
