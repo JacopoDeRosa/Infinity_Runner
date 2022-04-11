@@ -38,7 +38,7 @@ public class MapGenerator : MonoBehaviour
     private float _mapTimer = 0;
 
 
-    private float NextChunkWait { get => (_chunkLenght / _larry.Speed) - (_tickRate * _larry.Speed); }
+    private float NextChunkWait { get => (_chunkLenght / _larry.Speed); }
 
     private WaitForSeconds _tickWait;
 

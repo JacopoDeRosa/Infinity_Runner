@@ -25,7 +25,6 @@ public class Larry : MonoBehaviour
     private List<EffectContainer> _activeEffects;
 
     [SerializeField]
-    [ReadOnly]
     private float _currentSpeed;
 
     public float Speed { get => _currentSpeed; }
