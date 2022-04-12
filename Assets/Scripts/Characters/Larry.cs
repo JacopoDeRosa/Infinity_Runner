@@ -10,7 +10,7 @@ public class Larry : MonoBehaviour
     private Health _health;
 
     [SerializeField]
-    private LarryJumpAndSlide _slideController;
+    private LarryStanceController _slideController;
 
     [SerializeField]
     private bool _isEnemy;
@@ -28,10 +28,12 @@ public class Larry : MonoBehaviour
     private float _currentSpeed;
 
     public float Speed { get => _currentSpeed; }
-    public Health Health { get => _health; }
     public Stance CurrentStance { get => _slideController.CurrentStance; }
 
     public event FloatChangeHandler _onSpeedChange;
+
+    public event IntChangeHandler _onDamage;
+    public event IntChangeHandler _onHeal;
 
     private void Awake()
     {
@@ -53,7 +55,7 @@ public class Larry : MonoBehaviour
 
     private void UpdateSpeed()
     {
-        if(_currentSpeed <= _targetSpeed - 0.1f || _currentSpeed >= _targetSpeed + 0.1f)
+        if (_currentSpeed <= _targetSpeed - 0.1f || _currentSpeed >= _targetSpeed + 0.1f)
         {
             float smooth = Mathf.Clamp01(_speedChangeSmoothness * Time.deltaTime);
 
@@ -61,9 +63,10 @@ public class Larry : MonoBehaviour
 
             _onSpeedChange?.Invoke(_currentSpeed);
         }
-        else
+        else if (_currentSpeed != _targetSpeed)
         {
             _currentSpeed = _targetSpeed;
+            _onSpeedChange?.Invoke(_currentSpeed);
         }
     }
 
@@ -87,7 +90,6 @@ public class Larry : MonoBehaviour
 
     // Sets the character speed and invokes the onSpeedChange event to comunicate with eventual listeners, this is used for example
     // to comunicate with Larry's animator without referencing it in the character script.
-    [Button]
     public void ChangeSpeed(float speed)
     {
         _targetSpeed += speed;
@@ -108,10 +110,21 @@ public class Larry : MonoBehaviour
         _activeEffects.Add(new EffectContainer(effect));
     }
 
+    public void DealDamage(int damage)
+    {
+        _onDamage?.Invoke(damage);
+    }
+    public void HealDamage(int damage)
+    {
+        _onHeal?.Invoke(damage);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        // When Larry touches a tile with an interaction compent he triggers the effect on himself
+        // After that it's the tile's job to give the effect to larry
         var tile = other.gameObject.GetComponent<InteractiveTile>();
-        if(tile != null)
+        if (tile != null)
         {
             tile.Activate(this);
         }

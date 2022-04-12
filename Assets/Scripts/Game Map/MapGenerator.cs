@@ -23,7 +23,8 @@ public class MapGenerator : MonoBehaviour
     private float _tickRate;
 
     [ShowInInspector]
-    private List<MapChunk> _activeChunks = new List<MapChunk>();
+    [ReadOnly]
+    private Queue<MapChunk> _activeChunks = new Queue<MapChunk>();
 
     [ShowInInspector]
     [ReadOnly]
@@ -33,10 +34,9 @@ public class MapGenerator : MonoBehaviour
     [ReadOnly]
     private int _currentObstcleWait = 0;
 
-    [SerializeField]
+    [ShowInInspector]
     [ReadOnly]
-    private float _mapTimer = 0;
-
+    private MapChunk _lastChunk;
 
     private float NextChunkWait { get => (_chunkLenght / _larry.Speed); }
 
@@ -51,49 +51,45 @@ public class MapGenerator : MonoBehaviour
         {
             _availableChunks.Enqueue(chunk);
         }
+
         _tickWait = new WaitForSeconds(_tickRate);
+        PreWarm();
+        SpawnNewChunk();
         StartCoroutine(UpdateMap());
     }
 
-    private void RecycleChunks()
+    private void SpawnNewChunk()
     {
-        if (_mapTimer >= NextChunkWait)
+        // Gets a new Chunk from the ones that have gone trough the treadmill in a FIFO pattern
+        var activeChunk = _availableChunks.Dequeue();
+        // Sets the chunk active since it gets deactivated at cycle end
+        activeChunk.gameObject.SetActive(true);
+        // Sets the chunk spawn position and snaps it on the "Tsubasa" curve.
+        activeChunk.transform.position = _chunksSpawnPoint.position;
+        activeChunk.transform.position = new Vector3(activeChunk.transform.position.x, GetChunkY(activeChunk.transform), activeChunk.transform.position.z);
+        // Checks if it's time to spawn a new obstacle, if so the chunk will be marked as an obstacle and a new wait time chosen
+        if (_currentObstcleWait == 0)
         {
-            // Gets a new Chunk from the ones that have gone trough the treadmill in a FIFO pattern
-            var activeChunk = _availableChunks.Dequeue();
-            // Sets the chunk active since it gets deactivated at cycle end
-            activeChunk.gameObject.SetActive(true);
-            // Sets the chunk spawn position and snaps it on the "Tsubasa" curve.
-            activeChunk.transform.position = _chunksSpawnPoint.position;
-            activeChunk.transform.position = new Vector3(activeChunk.transform.position.x, GetChunkY(activeChunk.transform), activeChunk.transform.position.z);
-            // Checks if it's time to spawn a new obstacle, if so the chunk will be marked as an obstacle and a new wait time chosen
-            if (_currentObstcleWait == 0)
-            {
-                activeChunk.Init(true);
-                _currentObstcleWait = Random.Range(2, 4);
-            }
-            // Otherwise the chunk will be set as empty and wait will decrease
-            else
-            {
-                activeChunk.Init(false);
-                _currentObstcleWait--;
-            }
-            // Adds the chunk to the active chunks list allowing it to be moved in update.
-            _activeChunks.Add(activeChunk);
-
-            _mapTimer = 0;
+            activeChunk.Init(true);
+            _currentObstcleWait = Random.Range(2, 4);
         }
+        // Otherwise the chunk will be set as empty and wait will decrease
         else
         {
-            _mapTimer += _tickRate;
+            activeChunk.Init(false);
+            _currentObstcleWait--;
         }
+        // Adds the chunk to the active chunks list allowing it to be moved in update.
+        _activeChunks.Enqueue(activeChunk);
+        _lastChunk = activeChunk;
     }
 
-    private void MoveChunks()
+    private void MapTick()
     {
         // If a chunk passes the despawn position it will be set for recycling, collections shouldn't be modified in loops
         // so it gets stored in a variable and recycled afterward.
         MapChunk chunkToRemove = null;
+
         foreach (var chunk in _activeChunks)
         {
             if (chunk.transform.position.z <= _despawnZ)
@@ -111,15 +107,31 @@ public class MapGenerator : MonoBehaviour
 
                 chunk.transform.LookAt(new Vector3(0, nextChunkY, chunk.transform.position.z - _chunkLenght));
             }
+        }
 
+        if(_lastChunk.transform.position.z <= _chunksSpawnPoint.position.z - _chunkLenght)
+        {
+            SpawnNewChunk();
         }
 
         // If a chunk was marked it gets recycled
         if (chunkToRemove != null)
         {
-            _activeChunks.Remove(chunkToRemove);
+            var chunk = _activeChunks.Dequeue();
             chunkToRemove.ResetChunk();
-            _availableChunks.Enqueue(chunkToRemove);
+            _availableChunks.Enqueue(chunk);
+        }
+    }
+
+    private void PreWarm()
+    {
+        for (float i = _chunksSpawnPoint.position.z; i > _despawnZ; i-= _chunkLenght)
+        {
+            var chunk = _availableChunks.Dequeue();
+            chunk.gameObject.SetActive(true);
+            chunk.Init(false);
+            chunk.transform.position = new Vector3(0, _yPositionCurve.Evaluate(i), i);
+            _activeChunks.Enqueue(chunk);
         }
     }
 
@@ -133,8 +145,7 @@ public class MapGenerator : MonoBehaviour
     {
         while (true)
         {
-            RecycleChunks();
-            MoveChunks();
+            MapTick();
             yield return _tickWait;
         }
     }

@@ -16,6 +16,6 @@ public class DamageTile : InteractiveTile
                 return;
             }          
         }
-        character.Health.ChangeHp(-_damage);
+        character.DealDamage(_damage);
     }
 }

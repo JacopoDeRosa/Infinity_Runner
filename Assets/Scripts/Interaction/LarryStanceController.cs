@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LarryJumpAndSlide : MonoBehaviour
+public class LarryStanceController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] private Larry _larry;
     [SerializeField] private Stance _currentStance = Stance.Running;
 
     public Stance CurrentStance { get => _currentStance; }
+    private void Awake()
+    {
+        _larry._onSpeedChange += OnSpeedChange;
+        _larry._onDamage += OnDamage;
+    }
 
     private void Update()
     {
@@ -31,10 +37,23 @@ public class LarryJumpAndSlide : MonoBehaviour
     public void ResetStance()
     {
         _currentStance = Stance.Running;
+        foreach (var parameter in _animator.parameters)
+        {
+            if(parameter.type == AnimatorControllerParameterType.Trigger)
+            {
+                _animator.ResetTrigger(parameter.name);
+            }
+        } 
     }
 
-    public void Stumble()
+    private void OnSpeedChange(float speed)
+    {
+        _animator.SetFloat("Speed", speed);
+    }
+
+    private void OnDamage(int change)
     {
         _currentStance = Stance.Stumbling;
+        _animator.SetTrigger("Stumble");
     }
 }

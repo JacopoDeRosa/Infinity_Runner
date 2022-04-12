@@ -928,7 +928,6 @@ GameObject:
   - component: {fileID: 347681463}
   - component: {fileID: 347681462}
   - component: {fileID: 347681461}
-  - component: {fileID: 347681464}
   - component: {fileID: 347681465}
   - component: {fileID: 347681466}
   - component: {fileID: 347681467}
@@ -988,20 +987,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &347681464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347681460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db8f8593ad1b0d42b3f257f20857ec4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 347681467}
-  _larry: {fileID: 347681462}
 --- !u!114 &347681465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1029,6 +1014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 347681467}
+  _larry: {fileID: 347681462}
   _currentStance: 0
 --- !u!95 &347681467
 Animator:
@@ -1917,9 +1903,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _chunkLenght: 1
+  _chunkLenght: 0.95
   _tickRate: 0.01
-  _mapTimer: 0
 --- !u!4 &526889424
 Transform:
   m_ObjectHideFlags: 0

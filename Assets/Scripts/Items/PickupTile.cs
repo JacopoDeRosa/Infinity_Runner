@@ -8,7 +8,6 @@ public class PickupTile : InteractiveTile
 
     public override void Activate(Larry character)
     {
-        print("Hit " + character.name);
         character.AddEffect(_effect);
         gameObject.SetActive(false);
     }
