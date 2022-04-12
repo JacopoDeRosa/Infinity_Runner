@@ -21,6 +21,8 @@ public class MapGenerator : MonoBehaviour
     private float _chunkLenght;
     [SerializeField]
     private float _tickRate;
+    [SerializeField]
+    private bool _prewarm;
 
     [ShowInInspector]
     [ReadOnly]
@@ -53,7 +55,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         _tickWait = new WaitForSeconds(_tickRate);
-        PreWarm();
+       if(_prewarm) PreWarm();
         SpawnNewChunk();
         StartCoroutine(UpdateMap());
     }

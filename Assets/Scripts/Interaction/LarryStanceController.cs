@@ -1,37 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LarryStanceController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private Larry _larry;
+    [SerializeField] private PlayerInput _input;
     [SerializeField] private Stance _currentStance = Stance.Running;
+    [SerializeField] private float _actionThreshold;
 
     public Stance CurrentStance { get => _currentStance; }
+
+    private Vector2 _swipe;
+
+    private void OnValidate()
+    {
+        if(_input == null)
+        {
+            _input = FindObjectOfType<PlayerInput>();
+        }
+    }
+
+
     private void Awake()
     {
         _larry._onSpeedChange += OnSpeedChange;
         _larry._onDamage += OnDamage;
+
+        _input.actions["Swipe"].performed += OnSwipe;
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        // Stop Larry from jumping sliding or anything else if he is not running.
+        if (_input != null)
+        {
+
+        }
+    }
+
+    private void Slide()
+    {
         if (_currentStance != Stance.Running) return;
+        _currentStance = Stance.Sliding;
+        _animator.SetTrigger("Slide");
+    }
 
-        float rawVertical = Input.GetAxisRaw("Vertical");
-
-        if(rawVertical == 1)
-        {
-            _currentStance = Stance.Jumping;
-            _animator.SetTrigger("Jump");
-        }
-        else if(rawVertical == -1)
-        {
-            _currentStance = Stance.Sliding;
-            _animator.SetTrigger("Slide");
-        }
+    private void Jump()
+    {
+        if (_currentStance != Stance.Running) return;
+        _currentStance = Stance.Jumping;
+        _animator.SetTrigger("Jump");
     }
 
     public void ResetStance()
@@ -39,11 +59,24 @@ public class LarryStanceController : MonoBehaviour
         _currentStance = Stance.Running;
         foreach (var parameter in _animator.parameters)
         {
-            if(parameter.type == AnimatorControllerParameterType.Trigger)
+            if (parameter.type == AnimatorControllerParameterType.Trigger)
             {
                 _animator.ResetTrigger(parameter.name);
             }
-        } 
+        }
+    }
+
+    private void OnSwipe(InputAction.CallbackContext context)
+    {
+        _swipe = context.ReadValue<Vector2>();
+        if (_swipe.y > _actionThreshold)
+        {
+            Jump();
+        }
+        else if (_swipe.y < -_actionThreshold)
+        {
+            Slide();
+        }
     }
 
     private void OnSpeedChange(float speed)
