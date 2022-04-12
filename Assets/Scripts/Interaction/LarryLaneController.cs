@@ -65,7 +65,6 @@ public class LarryLaneController : MonoBehaviour
 
     private void OnFire(InputAction.CallbackContext context)
     {
-        print(_pos);
        if(_pos.x < Screen.width / 2)
        {
             GoLeft();

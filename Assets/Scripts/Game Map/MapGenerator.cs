@@ -26,7 +26,7 @@ public class MapGenerator : MonoBehaviour
 
     [ShowInInspector]
     [ReadOnly]
-    private Queue<MapChunk> _activeChunks = new Queue<MapChunk>();
+    private List<MapChunk> _activeChunks = new List<MapChunk>();
 
     [ShowInInspector]
     [ReadOnly]
@@ -82,7 +82,7 @@ public class MapGenerator : MonoBehaviour
             _currentObstcleWait--;
         }
         // Adds the chunk to the active chunks list allowing it to be moved in update.
-        _activeChunks.Enqueue(activeChunk);
+        _activeChunks.Add(activeChunk);
         _lastChunk = activeChunk;
     }
 
@@ -119,21 +119,21 @@ public class MapGenerator : MonoBehaviour
         // If a chunk was marked it gets recycled
         if (chunkToRemove != null)
         {
-            var chunk = _activeChunks.Dequeue();
+            _activeChunks.Remove(chunkToRemove);
             chunkToRemove.ResetChunk();
-            _availableChunks.Enqueue(chunk);
+            _availableChunks.Enqueue(chunkToRemove);
         }
     }
 
     private void PreWarm()
     {
-        for (float i = _chunksSpawnPoint.position.z; i > _despawnZ; i-= _chunkLenght)
+        for (float i = _despawnZ ; i < _chunksSpawnPoint.position.z; i+= _chunkLenght)
         {
             var chunk = _availableChunks.Dequeue();
             chunk.gameObject.SetActive(true);
             chunk.Init(false);
             chunk.transform.position = new Vector3(0, _yPositionCurve.Evaluate(i), i);
-            _activeChunks.Enqueue(chunk);
+            _activeChunks.Add(chunk);
         }
     }
 
