@@ -20,8 +20,6 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]
     private float _chunkLenght;
     [SerializeField]
-    private float _tickRate;
-    [SerializeField]
     private bool _prewarm;
 
     [ShowInInspector]
@@ -42,8 +40,6 @@ public class MapGenerator : MonoBehaviour
 
     private float NextChunkWait { get => (_chunkLenght / _larry.Speed); }
 
-    private WaitForSeconds _tickWait;
-
     private void Awake()
     {
         // Populates the queue with all the chunks marked in the start array, this array is usless afterwards and can be ignored
@@ -54,10 +50,8 @@ public class MapGenerator : MonoBehaviour
             _availableChunks.Enqueue(chunk);
         }
 
-        _tickWait = new WaitForSeconds(_tickRate);
        if(_prewarm) PreWarm();
         SpawnNewChunk();
-        StartCoroutine(UpdateMap());
     }
 
     private void SpawnNewChunk()
@@ -102,7 +96,7 @@ public class MapGenerator : MonoBehaviour
             {
                 // Moves the chunk on Z based on Larry's speed and on Y based on the provided curve
                 float chunkY = GetChunkY(chunk.transform);
-                float chunkZ = chunk.transform.position.z - (_larry.Speed * _tickRate);
+                float chunkZ = chunk.transform.position.z - (_larry.Speed * Time.fixedDeltaTime);
                 chunk.transform.position = new Vector3(0, chunkY, chunkZ);
 
                 float nextChunkY = _yPositionCurve.Evaluate(chunk.transform.position.z - _chunkLenght);
@@ -143,14 +137,9 @@ public class MapGenerator : MonoBehaviour
         return _yPositionCurve.Evaluate(chunk.position.z);
     }
 
-    private IEnumerator UpdateMap()
+    private void FixedUpdate()
     {
-        while (true)
-        {
-            MapTick();
-            yield return _tickWait;
-        }
-    }
-    
+        MapTick();
+    }   
 }
 
