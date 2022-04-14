@@ -8,6 +8,26 @@ ModelImporter:
     second: Larry_Run
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cigar_Mat
+    second: {fileID: 2100000, guid: a92eb5eea7524334c8c92600741edac5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Clothes_MAT
+    second: {fileID: 2100000, guid: f6dbbb24c000b1642923a5bde330cbad, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes_MAT
+    second: {fileID: 2100000, guid: 5af08b0bf2d461d45aa12019d954961a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skin_MAT
+    second: {fileID: 2100000, guid: 2eacb8ffa1717644382f754b3f6fbc3b, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Boss_diffuse

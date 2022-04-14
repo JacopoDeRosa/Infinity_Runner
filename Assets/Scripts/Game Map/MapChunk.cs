@@ -7,6 +7,8 @@ public class MapChunk : MonoBehaviour
 {
     [SerializeField] private ChunkCell[] _cells;
 
+    public System.Action onInit;
+
     private void OnValidate()
     {
         if(_cells.Length != 3)
@@ -42,6 +44,8 @@ public class MapChunk : MonoBehaviour
 
             _cells[i].Init(obType);
         }
+
+        onInit?.Invoke();
     }
 
     public void ResetChunk()
