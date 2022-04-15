@@ -21,6 +21,9 @@ public class MapGenerator : MonoBehaviour
     private float _chunkLenght;
     [SerializeField]
     private bool _prewarm;
+    [SerializeField]
+    private float _normalSpeed = 2;
+    
 
     [ShowInInspector]
     [ReadOnly]
@@ -38,8 +41,6 @@ public class MapGenerator : MonoBehaviour
     [ReadOnly]
     private MapChunk _lastChunk;
 
-    private float NextChunkWait { get => (_chunkLenght / _larry.Speed); }
-
     private void Awake()
     {
         // Populates the queue with all the chunks marked in the start array, this array is usless afterwards and can be ignored
@@ -50,7 +51,7 @@ public class MapGenerator : MonoBehaviour
             _availableChunks.Enqueue(chunk);
         }
 
-       if(_prewarm) PreWarm();
+        if(_prewarm) PreWarm();
         SpawnNewChunk();
     }
 

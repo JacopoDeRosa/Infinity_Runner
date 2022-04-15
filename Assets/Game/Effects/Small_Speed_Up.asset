@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9aa7e9a03c72634197574250f1fd839, type: 3}
-  m_Name: OreganoSpeedUp
+  m_Name: Small_Speed_Up
   m_EditorClassIdentifier: 
   _duration: 8
-  _speedChange: 4
+  _speedChange: 3

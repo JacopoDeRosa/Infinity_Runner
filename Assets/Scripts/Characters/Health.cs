@@ -13,31 +13,34 @@ public class Health : MonoBehaviour
     public event Action onDeath;
     public event Action onShotgunUsed;
 
+
+    public int CurrentHp { get => _currentHp; }
+
     /// <summary>
     /// Use change to add or remove hp (SIGNS MATTER)
     /// </summary>
     /// <param name="change"></param>
     public void ChangeHp(int change)
     {
-        if(_hasShotgun)
+        if (_hasShotgun)
         {
             _hasShotgun = false;
             onShotgunUsed?.Invoke();
             return;
         }
         _currentHp += change;
-        if(_currentHp <= 0)
+        if (_currentHp <= 0)
         {
             onDeath?.Invoke();
             _currentHp = 0;
         }
-        onHpChanged.Invoke(change);
+        onHpChanged?.Invoke(_currentHp);
     }
 
 
-    
 
 
 
-   
+
+
 }

@@ -113,10 +113,12 @@ public class Larry : MonoBehaviour
     public void DealDamage(int damage)
     {
         _onDamage?.Invoke(damage);
+        _health.ChangeHp(-damage);
     }
     public void HealDamage(int damage)
     {
         _onHeal?.Invoke(damage);
+        _health.ChangeHp(damage);
     }
 
     private void OnTriggerEnter(Collider other)
