@@ -4,26 +4,27 @@ using UnityEngine;
 
 public class AudioSourceLoop : MonoBehaviour
 {
-    [SerializeField] private float _introLenght;
-    [SerializeField] private Vector2[] _loopables;
+    [SerializeField] private LoopableAudioClip _activeClip;
     [SerializeField] private AudioSource _audioSource;
 
     private bool _introStarted;
 
     private int _currentLoopable;
 
-    private Vector2 CurrentLoopable { get => _loopables[_currentLoopable]; }
+    private Vector2 CurrentLoopable { get => _activeClip.LoopStops[_currentLoopable]; }
 
     private void Start()
     {
-        _currentLoopable = Random.Range(0, _loopables.Length);
+        if (_activeClip != null) SetNewClip(_activeClip);
     }
 
     private void Update()
     {
+        if (_activeClip == null) return;
+
         if(_introStarted == false)
         {
-            if(_audioSource.time >= _introLenght)
+            if(_audioSource.time >= _activeClip.IntroLenght)
             {
                 _introStarted = true;
                 _audioSource.time = CurrentLoopable.x;
@@ -34,8 +35,19 @@ public class AudioSourceLoop : MonoBehaviour
 
         if(_audioSource.time >= CurrentLoopable.y)
         {
-            _currentLoopable = Random.Range(0, _loopables.Length);
+            _currentLoopable = Random.Range(0, _activeClip.LoopStops.Length);
             _audioSource.time = CurrentLoopable.x;
         }
+
     }
+    public void SetNewClip(LoopableAudioClip clip)
+    {
+        _audioSource.Stop();
+        _audioSource.time = 0;
+        _audioSource.clip = clip.AudioClip;
+        _introStarted = false;
+        _currentLoopable = Random.Range(0, _activeClip.LoopStops.Length);
+        _audioSource.Play();
+    }
+    
 }
