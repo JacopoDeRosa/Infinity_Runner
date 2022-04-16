@@ -7,12 +7,12 @@ using System;
 public class Health : MonoBehaviour
 {
     [SerializeField] private int _currentHp;
-    [SerializeField] private bool _hasShotgun;
+    [SerializeField] private int _maxHp;
+
+    private bool _isDead;
 
     public event IntChangeHandler onHpChanged;
     public event Action onDeath;
-    public event Action onShotgunUsed;
-
 
     public int CurrentHp { get => _currentHp; }
 
@@ -22,18 +22,20 @@ public class Health : MonoBehaviour
     /// <param name="change"></param>
     public void ChangeHp(int change)
     {
-        if (_hasShotgun)
-        {
-            _hasShotgun = false;
-            onShotgunUsed?.Invoke();
-            return;
-        }
+        if (_isDead) return;
+
         _currentHp += change;
         if (_currentHp <= 0)
         {
+            _isDead = true;
             onDeath?.Invoke();
             _currentHp = 0;
         }
+        else if(_currentHp > _maxHp)
+        {
+            _currentHp = _maxHp;
+        }
+
         onHpChanged?.Invoke(_currentHp);
     }
 
