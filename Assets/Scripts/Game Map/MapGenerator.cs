@@ -41,7 +41,9 @@ public class MapGenerator : MonoBehaviour
     [ReadOnly]
     private MapChunk _lastChunk;
 
-    private void Awake()
+    public event ChunkChangeHandler onChunkInit;
+
+    private void Start()
     {
         // Populates the queue with all the chunks marked in the start array, this array is usless afterwards and can be ignored
         // This queue is used to recycle the chunks in a FIFO pattern.
@@ -79,6 +81,8 @@ public class MapGenerator : MonoBehaviour
         // Adds the chunk to the active chunks list allowing it to be moved in update.
         _activeChunks.Add(activeChunk);
         _lastChunk = activeChunk;
+
+        onChunkInit?.Invoke(activeChunk);
     }
 
     private void MapTick()
@@ -129,6 +133,7 @@ public class MapGenerator : MonoBehaviour
             chunk.Init(false);
             chunk.transform.position = new Vector3(0, _yPositionCurve.Evaluate(i), i);
             _activeChunks.Add(chunk);
+            onChunkInit?.Invoke(chunk);
         }
     }
 

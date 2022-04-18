@@ -6,8 +6,7 @@ using UnityEngine;
 public class MapChunk : MonoBehaviour
 {
     [SerializeField] private ChunkCell[] _cells;
-
-    public System.Action onInit;
+    [SerializeField] private ChunkDecorations _deco;
 
     private void OnValidate()
     {
@@ -44,12 +43,11 @@ public class MapChunk : MonoBehaviour
 
             _cells[i].Init(obType);
         }
-
-        onInit?.Invoke();
     }
 
     public void ResetChunk()
     {
+        _deco.ResetDeco();
         gameObject.SetActive(false);
     }
 }

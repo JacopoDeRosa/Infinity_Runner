@@ -1583,6 +1583,7 @@ GameObject:
   m_Component:
   - component: {fileID: 526889424}
   - component: {fileID: 526889423}
+  - component: {fileID: 526889425}
   m_Layer: 0
   m_Name: Game Map
   m_TagString: Untagged
@@ -1656,7 +1657,7 @@ MonoBehaviour:
   - {fileID: 721202783}
   - {fileID: 1273102723}
   _chunksSpawnPoint: {fileID: 1921765060}
-  _despawnZ: -2
+  _despawnZ: -5
   _yPositionCurve:
     serializedVersion: 2
     m_Curve:
@@ -1689,7 +1690,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 35
-      value: -2
+      value: -4
       inSlope: -0.41736716
       outSlope: -0.41736716
       tangentMode: 0
@@ -1767,6 +1768,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &526889425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526889422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e089bd0100a27b74f968ebc4b533d6e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lightsInterval: 15
+  _generator: {fileID: 526889423}
 --- !u!114 &613090893 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4710625852266413447, guid: a13133fa675467d4c913ddd77a19cbb7, type: 3}
@@ -3287,8 +3302,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0, g: 0.17673054, b: 0.4056604, a: 1}
-  m_Intensity: 0.75
+  m_Color: {r: 0, g: 0.33872947, b: 0.7735849, a: 1}
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
