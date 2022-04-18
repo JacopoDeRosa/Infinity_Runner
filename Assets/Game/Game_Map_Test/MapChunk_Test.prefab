@@ -2859,7 +2859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7005771449516507449
 Transform:
   m_ObjectHideFlags: 0
@@ -2885,11 +2885,11 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 45
+  m_Color: {r: 1, g: 0.8569949, b: 0.4669811, a: 1}
+  m_Intensity: 20
   m_Range: 10
   m_SpotAngle: 120
-  m_InnerSpotAngle: 100
+  m_InnerSpotAngle: 75
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -5539,7 +5539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8701420963550120213
 Transform:
   m_ObjectHideFlags: 0
@@ -5565,11 +5565,11 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 45
+  m_Color: {r: 1, g: 0.8569949, b: 0.4669811, a: 1}
+  m_Intensity: 20
   m_Range: 10
   m_SpotAngle: 120
-  m_InnerSpotAngle: 100
+  m_InnerSpotAngle: 75
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
