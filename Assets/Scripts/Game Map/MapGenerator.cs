@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -25,20 +24,13 @@ public class MapGenerator : MonoBehaviour
     private float _normalSpeed = 2;
     
 
-    [ShowInInspector]
-    [ReadOnly]
     private List<MapChunk> _activeChunks = new List<MapChunk>();
 
-    [ShowInInspector]
-    [ReadOnly]
     private Queue<MapChunk> _availableChunks;
     
-    [ShowInInspector]
-    [ReadOnly]
+
     private int _currentObstcleWait = 0;
 
-    [ShowInInspector]
-    [ReadOnly]
     private MapChunk _lastChunk;
 
     public event ChunkChangeHandler onChunkInit;

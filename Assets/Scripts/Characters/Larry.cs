@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
 using System;
 
 public class Larry : MonoBehaviour
@@ -21,7 +20,7 @@ public class Larry : MonoBehaviour
     [SerializeField]
     private float _speedChangeSmoothness;
 
-    [ShowInInspector]
+
     private List<EffectContainer> _activeEffects;
 
     [SerializeField]

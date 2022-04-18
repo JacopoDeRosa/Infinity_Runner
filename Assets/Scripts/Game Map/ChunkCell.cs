@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
-using Sirenix.Utilities;
 using System;
 
 
@@ -10,7 +8,7 @@ public class ChunkCell : MonoBehaviour
 {
 
     [SerializeField]
-    [InfoBox("Never ever add or remove from this collection")]
+    [Tooltip("Never ever add or remove from this collection")]
     private CellObstacle[] _availableCells;
 
     private void OnValidate()
@@ -18,7 +16,6 @@ public class ChunkCell : MonoBehaviour
         CheckCellsValidity();
     }
 
-    [Button("Check Cells Validity")]
     private void CheckCellsValidity()
     {
         int lenght = Enum.GetNames(typeof(ObTypes)).Length;
