@@ -1,0 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UI_Manager : MonoBehaviour
+{
+    [SerializeField] private GameObject _gameOverScreen;
+    [SerializeField] private Larry _mainCharacter;
+
+    private void Awake()
+    {
+        _mainCharacter.onDeath += OnDeath;
+    }
+
+    private void Start()
+    {
+        _gameOverScreen.SetActive(false);
+    }
+
+    private void OnDeath()
+    {
+        _gameOverScreen.SetActive(true);
+    }
+}

@@ -21,13 +21,15 @@ public class LarryStanceController : MonoBehaviour
         {
             _input = FindObjectOfType<PlayerInput>();
         }
+
+        _larry.onDeath += OnDeath;
     }
 
 
     private void Awake()
     {
-        _larry._onSpeedChange += OnSpeedChange;
-        _larry._onDamage += OnDamage;
+        _larry.onSpeedChange += OnSpeedChange;
+        _larry.onDamage += OnDamage;
 
         _input.actions["Swipe"].performed += OnSwipe;
     }
@@ -36,7 +38,7 @@ public class LarryStanceController : MonoBehaviour
     {
         if (_input != null)
         {
-
+            _input.actions["Swipe"].performed -= OnSwipe;
         }
     }
 
@@ -88,5 +90,10 @@ public class LarryStanceController : MonoBehaviour
     {
         _currentStance = Stance.Stumbling;
         _animator.SetTrigger("Stumble");
+    }
+
+    private void  OnDeath()
+    {
+        _animator.SetTrigger("Die");
     }
 }

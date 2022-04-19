@@ -29,21 +29,23 @@ public class Larry : MonoBehaviour
     public float Speed { get => _currentSpeed; }
     public Stance CurrentStance { get => _slideController.CurrentStance; }
 
-    public event FloatChangeHandler _onSpeedChange;
+    public event FloatChangeHandler onSpeedChange;
 
-    public event IntChangeHandler _onDamage;
-    public event IntChangeHandler _onHeal;
+    public event IntChangeHandler onDamage;
+    public event IntChangeHandler onHeal;
+    public event Action onDeath;
 
     private void Awake()
     {
         _activeEffects = new List<EffectContainer>();
+        _health.onDeath += OnDeath;
     }
 
     // The onSpeedChange event gets called at start to tell listeners about the character's starting speed
     private void Start()
     {
         _currentSpeed = _targetSpeed;
-        _onSpeedChange?.Invoke(Speed);
+        onSpeedChange?.Invoke(Speed);
     }
 
     private void Update()
@@ -60,12 +62,12 @@ public class Larry : MonoBehaviour
 
             _currentSpeed = Mathf.Lerp(_currentSpeed, _targetSpeed, smooth);
 
-            _onSpeedChange?.Invoke(_currentSpeed);
+            onSpeedChange?.Invoke(_currentSpeed);
         }
         else if (_currentSpeed != _targetSpeed)
         {
             _currentSpeed = _targetSpeed;
-            _onSpeedChange?.Invoke(_currentSpeed);
+            onSpeedChange?.Invoke(_currentSpeed);
         }
     }
 
@@ -111,13 +113,19 @@ public class Larry : MonoBehaviour
 
     public void DealDamage(int damage)
     {
-        _onDamage?.Invoke(damage);
+        onDamage?.Invoke(damage);
         _health.ChangeHp(-damage);
     }
     public void HealDamage(int damage)
     {
-        _onHeal?.Invoke(damage);
+        onHeal?.Invoke(damage);
         _health.ChangeHp(damage);
+    }
+
+    private void OnDeath()
+    {
+        _targetSpeed = 0;
+        onDeath?.Invoke();
     }
 
     private void OnTriggerEnter(Collider other)
