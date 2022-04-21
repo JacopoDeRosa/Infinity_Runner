@@ -39,12 +39,7 @@ public class MapGenerator : MonoBehaviour
     {
         // Populates the queue with all the chunks marked in the start array, this array is usless afterwards and can be ignored
         // This queue is used to recycle the chunks in a FIFO pattern.
-        _availableChunks = new Queue<MapChunk>();
-        foreach(MapChunk chunk in _allChunks)
-        {
-            _availableChunks.Enqueue(chunk);
-        }
-
+        _availableChunks = new Queue<MapChunk>(_allChunks); 
         if(_prewarm) PreWarm();
         SpawnNewChunk();
     }
