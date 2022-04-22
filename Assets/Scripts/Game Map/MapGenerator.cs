@@ -7,7 +7,7 @@ public class MapGenerator : MonoBehaviour
     
     
     [SerializeField]
-    private Larry _larry;
+    private PlayerCharacter _larry;
     [SerializeField] 
     private MapChunk[] _allChunks;
     [SerializeField]

@@ -5,7 +5,7 @@ using UnityEngine;
 public class UI_Manager : MonoBehaviour
 {
     [SerializeField] private GameObject _gameOverScreen;
-    [SerializeField] private Larry _mainCharacter;
+    [SerializeField] private PlayerCharacter _mainCharacter;
 
     private void Awake()
     {

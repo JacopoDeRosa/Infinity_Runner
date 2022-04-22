@@ -7,7 +7,7 @@ public class InteractiveTile : MonoBehaviour
 {
     public event Action onPickup;
 
-    public virtual void Activate(Larry character)
+    public virtual void Activate(PlayerCharacter character)
     {
         onPickup.Invoke();
         gameObject.SetActive(false);

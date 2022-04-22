@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Larry : MonoBehaviour
+public class PlayerCharacter : MonoBehaviour
 {
     [SerializeField]
     private Health _health;
 
     [SerializeField]
-    private LarryStanceController _slideController;
+    private PlayerStanceController _slideController;
 
     [SerializeField]
     private bool _isEnemy;

@@ -8,12 +8,12 @@ public class SpeedEffect : PickupEffect
 {
     [SerializeField] private float _speedChange;
 
-    public override void Begin(Larry character)
+    public override void Begin(PlayerCharacter character)
     {
         character.ChangeSpeed(_speedChange);
     }
 
-    public override void End(Larry character)
+    public override void End(PlayerCharacter character)
     {
         character.ChangeSpeed(-_speedChange);
     }

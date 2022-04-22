@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LarryStanceController : MonoBehaviour
+public class PlayerStanceController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private Larry _larry;
+    [SerializeField] private PlayerCharacter _larry;
     [SerializeField] private PlayerInput _input;
     [SerializeField] private Stance _currentStance = Stance.Running;
     [SerializeField] private float _actionThreshold;

@@ -8,12 +8,12 @@ public class HealthEffect : PickupEffect
 {
     [SerializeField] private int _heal;
 
-    public override void Begin(Larry character)
+    public override void Begin(PlayerCharacter character)
     {
         character.HealDamage(_heal);
     }
 
-    public override void End(Larry character)
+    public override void End(PlayerCharacter character)
     {
 
     }

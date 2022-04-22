@@ -8,6 +8,6 @@ public abstract class PickupEffect : ScriptableObject
     [SerializeField] private Sprite _effectSprite;
 
     public float Duration { get => _duration; }
-    public abstract void Begin(Larry character);
-    public abstract void End(Larry character);
+    public abstract void Begin(PlayerCharacter character);
+    public abstract void End(PlayerCharacter character);
 }

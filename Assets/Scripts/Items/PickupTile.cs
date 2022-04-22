@@ -6,7 +6,7 @@ public class PickupTile : InteractiveTile
 {
     [SerializeField] private PickupEffect _effect;
 
-    public override void Activate(Larry character)
+    public override void Activate(PlayerCharacter character)
     {
         character.AddEffect(_effect);
         gameObject.SetActive(false);

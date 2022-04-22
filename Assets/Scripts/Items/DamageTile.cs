@@ -7,7 +7,7 @@ public class DamageTile : InteractiveTile
     [SerializeField] private int _damage;
     [SerializeField] private Stance[] _immuneStances;
 
-    public override void Activate(Larry character)
+    public override void Activate(PlayerCharacter character)
     {
         foreach (Stance stance in _immuneStances)
         {

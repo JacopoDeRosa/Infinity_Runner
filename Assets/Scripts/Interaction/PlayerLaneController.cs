@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
 
-public class LarryLaneController : MonoBehaviour
+public class PlayerLaneController : MonoBehaviour
 {
     [SerializeField] private float _sideSpeed;
     [SerializeField] private float _inputSmoothing;
