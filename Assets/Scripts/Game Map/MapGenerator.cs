@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour
+public class MapGenerator : MonoBehaviour, IReloadable
 {
     
     
@@ -37,10 +37,15 @@ public class MapGenerator : MonoBehaviour
 
     private void Start()
     {
+        StartMap();
+    }
+
+    private void StartMap()
+    {
         // Populates the queue with all the chunks marked in the start array, this array is usless afterwards and can be ignored
         // This queue is used to recycle the chunks in a FIFO pattern.
-        _availableChunks = new Queue<MapChunk>(_allChunks); 
-        if(_prewarm) PreWarm();
+        _availableChunks = new Queue<MapChunk>(_allChunks);
+        if (_prewarm) PreWarm();
         SpawnNewChunk();
     }
 
@@ -133,6 +138,17 @@ public class MapGenerator : MonoBehaviour
     private void FixedUpdate()
     {
         MapTick();
-    }   
+    }
+
+    public void Reload()
+    {
+        foreach (var chunk in _activeChunks)
+        {
+            chunk.ResetChunk();
+        }
+        _activeChunks.Clear();
+
+        StartMap();
+    }
 }
 

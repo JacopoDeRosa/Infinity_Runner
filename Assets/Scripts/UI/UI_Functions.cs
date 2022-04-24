@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,8 +13,19 @@ public class UI_Functions : MonoBehaviour
         Application.Quit();
     }
 
-    public void LoadMainScene()
+    public void LoadScene(int index)
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(index);
+    }
+
+    public void CallReload()
+    {
+        ReloadableComponent[] reloadables = FindObjectsOfType<ReloadableComponent>();
+
+        foreach (var reloadable in reloadables)
+        {
+            reloadable.Reload();
+        }
+
     }
 }

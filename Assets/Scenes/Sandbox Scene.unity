@@ -1674,6 +1674,7 @@ GameObject:
   - component: {fileID: 526889424}
   - component: {fileID: 526889423}
   - component: {fileID: 526889425}
+  - component: {fileID: 526889426}
   m_Layer: 0
   m_Name: Game Map
   m_TagString: Untagged
@@ -1872,6 +1873,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lightsInterval: 10
   _generator: {fileID: 526889423}
+--- !u!114 &526889426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526889422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae3053bf364f1c429a6f55e34ba65a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &613090893 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4710625852266413447, guid: a13133fa675467d4c913ddd77a19cbb7, type: 3}
