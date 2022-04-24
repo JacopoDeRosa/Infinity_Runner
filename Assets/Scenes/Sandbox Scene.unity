@@ -1231,6 +1231,7 @@ GameObject:
   - component: {fileID: 347681466}
   - component: {fileID: 347681467}
   - component: {fileID: 347681468}
+  - component: {fileID: 347681464}
   m_Layer: 7
   m_Name: Larry
   m_TagString: Player
@@ -1266,10 +1267,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 347681461}
   _slideController: {fileID: 347681466}
-  _isEnemy: 0
-  _targetSpeed: 3
+  _baseSpeed: 3
   _speedChangeSmoothness: 3
-  _currentSpeed: 0
 --- !u!4 &347681463
 Transform:
   m_ObjectHideFlags: 0
@@ -1286,6 +1285,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &347681464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347681460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae3053bf364f1c429a6f55e34ba65a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &347681465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1298,7 +1309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e45a20db0220e4b903890aa8c002da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sideSpeed: 2
   _inputSmoothing: 15
   _input: {fileID: 8232096}
   _actionThreshold: 25
@@ -1316,7 +1326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 347681467}
-  _larry: {fileID: 347681462}
+  _playerCharacter: {fileID: 347681462}
   _input: {fileID: 8232096}
   _currentStance: 0
   _actionThreshold: 25
@@ -3708,7 +3718,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1623148460}
         m_TargetAssemblyTypeName: UI_Functions, Assembly-CSharp
-        m_MethodName: ReloadCurrentScene
+        m_MethodName: CallReload
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4522,6 +4532,7 @@ GameObject:
   - component: {fileID: 1453761214}
   - component: {fileID: 1453761215}
   - component: {fileID: 1453761213}
+  - component: {fileID: 1453761216}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -4658,6 +4669,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1453761213}
+--- !u!114 &1453761216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453761211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae3053bf364f1c429a6f55e34ba65a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1484423654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5134,6 +5157,7 @@ GameObject:
   - component: {fileID: 1623148455}
   - component: {fileID: 1623148459}
   - component: {fileID: 1623148460}
+  - component: {fileID: 1623148461}
   m_Layer: 5
   m_Name: Main UI Canvas
   m_TagString: Untagged
@@ -5248,6 +5272,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55b23bc83eb6bac47b2c8cd330b33915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1623148461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623148454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae3053bf364f1c429a6f55e34ba65a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1647161109

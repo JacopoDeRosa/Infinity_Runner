@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UI_Timer : MonoBehaviour
+public class UI_Timer : MonoBehaviour, IReloadable
 {
     public static string ToClockFormat(float time)
     {
@@ -21,8 +21,16 @@ public class UI_Timer : MonoBehaviour
 
     [SerializeField] private TMP_Text _text;
 
+    private float _currentTime;
+
     private void Update()
     {
-        _text.text = ToClockFormat(Time.time);
+        _currentTime += Time.deltaTime;
+        _text.text = ToClockFormat(_currentTime);
+    }
+
+    public void Reload()
+    {
+        _currentTime = 0;
     }
 }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerStanceController : MonoBehaviour
+public class PlayerStanceController : MonoBehaviour, IReloadable
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private PlayerCharacter _larry;
+    [SerializeField] private PlayerCharacter _playerCharacter;
     [SerializeField] private PlayerInput _input;
     [SerializeField] private Stance _currentStance = Stance.Running;
     [SerializeField] private float _actionThreshold;
@@ -21,15 +21,14 @@ public class PlayerStanceController : MonoBehaviour
         {
             _input = FindObjectOfType<PlayerInput>();
         }
-
-        _larry.onDeath += OnDeath;
     }
 
 
     private void Awake()
     {
-        _larry.onSpeedChange += OnSpeedChange;
-        _larry.onDamage += OnDamage;
+        _playerCharacter.onSpeedChange += OnSpeedChange;
+        _playerCharacter.onDamage += OnDamage;
+        _playerCharacter.onDeath += OnDeath;
 
         _input.actions["Swipe"].performed += OnSwipe;
     }
@@ -95,5 +94,11 @@ public class PlayerStanceController : MonoBehaviour
     private void  OnDeath()
     {
         _animator.SetTrigger("Die");
+    }
+
+    public void Reload()
+    {
+        _animator.SetTrigger("Reset");  
+        _currentStance = Stance.Running;
     }
 }

@@ -5,9 +5,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
 
-public class PlayerLaneController : MonoBehaviour
+public class PlayerLaneController : MonoBehaviour, IReloadable
 {
-    [SerializeField] private float _sideSpeed;
     [SerializeField] private float _inputSmoothing;
     [SerializeField] private PlayerInput _input;
     [SerializeField] private float _actionThreshold;
@@ -89,5 +88,11 @@ public class PlayerLaneController : MonoBehaviour
             transform.Translate(new Vector3(1, 0, 0));
             _currentLane++;
         }
+    }
+
+    public void Reload()
+    {
+        transform.position = new Vector3(0, transform.position.y, transform.position.z);
+        _currentLane = Lanes.Middle;
     }
 }

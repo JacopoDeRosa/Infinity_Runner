@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class PlayerCharacter : MonoBehaviour
+public class PlayerCharacter : MonoBehaviour, IReloadable
 {
     [SerializeField]
     private Health _health;
@@ -12,19 +12,16 @@ public class PlayerCharacter : MonoBehaviour
     private PlayerStanceController _slideController;
 
     [SerializeField]
-    private bool _isEnemy;
-
-    [SerializeField]
-    private float _targetSpeed;
+    private float _baseSpeed = 3;
 
     [SerializeField]
     private float _speedChangeSmoothness;
 
 
-    private List<EffectContainer> _activeEffects;
 
-    [SerializeField]
+    private List<EffectContainer> _activeEffects;
     private float _currentSpeed;
+    private float _targetSpeed;
 
     public float Speed { get => _currentSpeed; }
     public Stance CurrentStance { get => _slideController.CurrentStance; }
@@ -44,6 +41,7 @@ public class PlayerCharacter : MonoBehaviour
     // The onSpeedChange event gets called at start to tell listeners about the character's starting speed
     private void Start()
     {
+        _targetSpeed = _baseSpeed;
         _currentSpeed = _targetSpeed;
         onSpeedChange?.Invoke(Speed);
     }
@@ -137,6 +135,13 @@ public class PlayerCharacter : MonoBehaviour
         {
             tile.Activate(this);
         }
+    }
+
+    public void Reload()
+    {
+        _targetSpeed = _baseSpeed;
+        _currentSpeed = _targetSpeed;
+        onSpeedChange?.Invoke(_currentSpeed);
     }
 }
 

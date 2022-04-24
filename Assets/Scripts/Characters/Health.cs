@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IReloadable
 {
     [SerializeField] private int _currentHp;
     [SerializeField] private int _maxHp;
@@ -36,6 +36,13 @@ public class Health : MonoBehaviour
             _currentHp = _maxHp;
         }
 
+        onHpChanged?.Invoke(_currentHp);
+    }
+
+    public void Reload()
+    {
+        _isDead = false;
+        _currentHp = _maxHp;
         onHpChanged?.Invoke(_currentHp);
     }
 
